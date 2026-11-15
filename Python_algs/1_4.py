@@ -59,17 +59,18 @@ except ValueError:
 
 try:
     cnt_errs, average = status(clf_pattern, path)
-    cnt_errs_time, average_time = status(clf_pattern, path, start_time, end_time)
+    cnt_errs_time, average_time = status(clf_pattern, path, start_time,
+                                         end_time)
 except PermissionError:
     exit("Доступ к файлу запрещён")
 except UnicodeDecodeError:
     exit("Кодировка файла не UTF-8")
 
-print("Средний размер ответа по коду состояния *код: размер* -",
-      dict(average))
-print("Ошибок:", cnt_errs)
+with open("result.txt", "w", encoding="UTF-8") as result:
+    result.write(
+        f"Средний размер ответа по коду состояния *код: размер* - {dict(average)}\n")
+    result.write(f"Ошибок: {cnt_errs}\n")
 
-print(
-    "Средний размер ответа по коду состояния в диапазоне времени в формате *код: размер* -",
-    dict(average_time))
-print("Ошибок в диапазоне времени:", cnt_errs_time)
+    result.write(
+        f"Средний размер ответа по коду состояния *код: размер* - {dict(average_time)}\n")
+    result.write(f"Ошибок: {cnt_errs_time}\n")
